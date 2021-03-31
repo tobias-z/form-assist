@@ -1,0 +1,45 @@
+{
+  "name": "form-assist",
+  "version": "1.0.0",
+  "private": false,
+  "description": "This is a form library designed to make forms easier using hooks",
+  "main": "lib/index.js",
+  "types": "lib",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tobias-z/form-assist"
+  },
+  "bugs": {
+    "url": "https://github.com/tobias-z/form-assist/issues"
+  },
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://github.com/tobias-z/form-assist#readme",
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "keywords": [
+    "react",
+    "forms",
+    "hooks"
+  ],
+  "author": "Tobias Zimmermann",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "typescript": "^4.2.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "lib",
+    "*.d.ts"
+  ]
+}
