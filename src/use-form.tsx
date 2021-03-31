@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from "react"
 
 type FormContext = {
   values: Record<string, unknown>
@@ -12,7 +12,7 @@ const FormContext = React.createContext<FormContext | null>(null)
 function useFormContext() {
   const context = React.useContext(FormContext)
   if (!context) {
-    throw new Error('Form helpers were used outside of a the Form component')
+    throw new Error("Form helpers were used outside of a the Form component")
   }
   return context
 }
@@ -22,7 +22,7 @@ function useForm<TValues>(initialValues: TValues) {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let value
-    if (e.target.type === 'checkbox') {
+    if (e.target.type === "checkbox") {
       value = e.target.checked
     } else {
       value = e.target.value
@@ -66,7 +66,7 @@ function Form<FormHelpers>({
 }
 
 type Select = {
-  type: 'select'
+  type: "select"
   name: string
   options: Array<{
     id: number | string
@@ -76,25 +76,25 @@ type Select = {
 }
 
 type Textarea = {
-  type: 'textarea'
+  type: "textarea"
   name: string
   className?: string
 }
 
 type Checkbox = {
-  type: 'checkbox'
+  type: "checkbox"
   name: string
   className?: string
 }
 
 type TextField = {
-  type?: 'text'
+  type?: "text"
   name: string
   className?: string
 }
 
 type Radio = {
-  type: 'radio'
+  type: "radio"
   name: string
   value: string
   className?: string
@@ -106,7 +106,7 @@ function Field({name, ...props}: FieldProps) {
   const {values, handleChange} = useFormContext()
   const value = values[name] as string
 
-  if (props.type === 'select') {
+  if (props.type === "select") {
     return (
       <select
         name={name}
@@ -121,7 +121,7 @@ function Field({name, ...props}: FieldProps) {
         ))}
       </select>
     )
-  } else if (props.type === 'textarea') {
+  } else if (props.type === "textarea") {
     return (
       <textarea
         name={name}

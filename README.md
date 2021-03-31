@@ -1,7 +1,7 @@
 <div align="center">
 <h1>Form assist</h1>
 
-<p>Create easy forms in react.</p>
+<p>Create easy forms in react. 🎉</p>
 </div>
 
 ---
