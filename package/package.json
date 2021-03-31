@@ -22,7 +22,9 @@
   "keywords": [
     "react",
     "forms",
-    "hooks"
+    "form",
+    "hooks",
+    "react-dom"
   ],
   "author": "Tobias Zimmermann",
   "license": "MIT",

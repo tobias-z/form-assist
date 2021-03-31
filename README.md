@@ -14,11 +14,13 @@
 
 ## The problem
 
-TBA
+I have been using formik for a while now, and I really like it. My only problem
+with it, was the fact that sometimes your forms would become hard for me, to
+wrap my head around.
 
 ## The solution
 
-TBA
+Make the all the values and errors available outside the JSX
 
 ## Installation
 
@@ -50,6 +52,20 @@ return (
   </>
 )
 ```
+
+Form assist also supports custom components through the _elements_ property.
+
+```jsx
+const animals = [
+  {id: Math.random(), value: "Cat"},
+  {id: Math.random(), value: "Dog"},
+]
+
+return <Field name="example" element={<SelectField />} options={animals} />
+```
+
+This will create **ALL** of your select and insert your array's, values as key's
+or value respectively.
 
 ## Issues
 
