@@ -6,12 +6,9 @@
 
 ---
 
-<!-- prettier-ignore-start -->
-[![version][version-badge]][package]
-[![downloads][downloads-badge]][npmtrends]
-[![MIT License][license-badge]][license]
-[![PRs Welcome][prs-badge]][prs]
-<!-- prettier-ignore-end -->
+![documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)
+![MIT](https://img.shields.io/npm/v/form-assist)
+![version](https://img.shields.io/github/license/tobias-z/form-assist)
 
 > Working process
 
@@ -56,17 +53,17 @@ return (
 
 ## Issues
 
-\_Looking to contribute? Any feedback is very appreciated.
+Looking to contribute? Any feedback is very appreciated.
 
 ### 🪲 Bugs
 
 Please file an issue for bugs, missing documentation, or unexpected behavior.
 
-[**See Bugs**][bugs]
+[**Create bug report**](https://github.com/tobias-z/form-assist/issues/new?assignees=&labels=&template=bug_report.md&title=)
 
 ### 🕯 Feature Requests
 
 Please file an issue to suggest new features. Vote on feature requests by adding
 a 👍.
 
-[**See Feature Requests**][requests]
+[**Create Feature Requests**](https://github.com/tobias-z/form-assist/issues/new?assignees=&labels=&template=feature_request.md&title=)
