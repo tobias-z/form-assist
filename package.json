@@ -1,6 +1,6 @@
 {
   "name": "form-assist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "description": "This is a form library designed to make forms easier using hooks",
   "main": "lib/index.js",
@@ -25,10 +25,15 @@
     "hooks"
   ],
   "author": "Tobias Zimmermann",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "eslint": "^7.23.0",
+    "eslint-plugin-react": "^7.23.1",
+    "kcd-scripts": "^8.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "typescript": "^4.2.3"
