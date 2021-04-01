@@ -8,7 +8,7 @@
 ![documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)
 ![MIT](https://img.shields.io/npm/v/form-assist)
 ![version](https://img.shields.io/github/license/tobias-z/form-assist)
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 
 > Working process
 
