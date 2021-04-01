@@ -56,7 +56,7 @@ return (
 ```
 
 <p>
-<details><summary><strong>useForm</strong></summary><br/>
+<details><summary><strong>useForm</strong></summary>
 
 ```jsx
 import {useForm} from "form-assist"
@@ -77,7 +77,7 @@ const {
 ```
 
 <p>
-<details><summary><strong>values</strong></summary><br/>
+<details><summary><strong>values</strong></summary>
 
 ### Values
 
@@ -88,7 +88,7 @@ function
 </p>
 
 <p>
-<details><summary><strong>setValues</strong></summary><br/>
+<details><summary><strong>setValues</strong></summary>
 
 ### setValues
 
@@ -105,7 +105,7 @@ setValues({...values, example: "you have been modified"})
 </p>
 
 <p>
-<details><summary><strong>errors</strong></summary><br/>
+<details><summary><strong>errors</strong></summary>
 
 ### Errors
 
@@ -116,7 +116,7 @@ If at any point these strings have a value, the form will not submit
 </p>
 
 <p>
-<details><summary><strong>setErrors</strong></summary><br/>
+<details><summary><strong>setErrors</strong></summary>
 
 ### setErrors
 
@@ -133,7 +133,7 @@ setErrors({...errors, example: "Unknown example!"})
 </p>
 
 <p>
-<details><summary><strong>handleChange</strong></summary><br/>
+<details><summary><strong>handleChange</strong></summary>
 
 ### handleChange
 
@@ -156,7 +156,7 @@ return (
 </p>
 
 <p>
-<details><summary><strong>resetForm</strong></summary><br/>
+<details><summary><strong>resetForm</strong></summary>
 
 ### resetForm
 
@@ -180,8 +180,10 @@ function handleSubmit(event) {
 </details>
 </p>
 
+---
+
 <p>
-<details><summary><strong>Form</strong></summary><br/>
+<details><summary><strong>Form</strong></summary>
 
 ### Form
 
@@ -189,7 +191,7 @@ The Form component is the way to bootstrap your form. Whenever you use a new
 Form, it will need a few properties to function properly 💪
 
 <p>
-<details><summary><strong>formHelpers</strong></summary><br/>
+<details><summary><strong>formHelpers</strong></summary>
 
 ### formHelpers
 
@@ -207,7 +209,7 @@ return <Form formHelpers={formHelpers}></Form>
 </p>
 
 <p>
-<details><summary><strong>onSubmit</strong></summary><br/>
+<details><summary><strong>onSubmit</strong></summary>
 
 ### onSubmit
 
@@ -232,8 +234,10 @@ return (
 </details>
 </p>
 
+---
+
 <p>
-<details><summary><strong>Field</strong></summary><br/>
+<details><summary><strong>Field</strong></summary>
 
 ### Field
 
