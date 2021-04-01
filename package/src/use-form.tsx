@@ -5,14 +5,16 @@ type Errors<TValues> = {
 }
 
 function useForm<TValues>(initialValues: TValues) {
-  const [values, setValues] = React.useState<TValues>(initialValues)
-  const [errors, setErrors] = React.useState<Errors<TValues>>(() => {
+  function setInitialErrors() {
     let errors = {...initialValues}
     for (const [key] of Object.entries(initialValues)) {
       errors = {...errors, [key]: ""}
     }
     return errors
-  })
+  }
+
+  const [values, setValues] = React.useState<TValues>(initialValues)
+  const [errors, setErrors] = React.useState<Errors<TValues>>(setInitialErrors)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let value
@@ -26,6 +28,7 @@ function useForm<TValues>(initialValues: TValues) {
 
   function resetForm() {
     setValues(initialValues)
+    setInitialErrors()
   }
 
   const formHelpers = {
