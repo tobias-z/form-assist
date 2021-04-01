@@ -1,8 +1,11 @@
 import * as React from "react"
+import type {Errors} from "./use-form"
 
 type FormContext = {
   values: Record<string, unknown>
   setValues: React.Dispatch<React.SetStateAction<unknown>>
+  errors: Errors<unknown>
+  setErrors: React.Dispatch<React.SetStateAction<Errors<unknown>>>
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   resetForm: () => void
 }
@@ -17,21 +20,28 @@ function useFormContext() {
   return context
 }
 
-type FormProps<FormHelpers> = {
-  formHelpers: FormHelpers
+type FormProps = {
+  formHelpers: FormContext
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   children: React.ReactNode
 }
 
-function Form<FormHelpers>({
-  formHelpers,
-  onSubmit,
-  children,
-  ...props
-}: FormProps<FormHelpers>) {
+function Form({formHelpers, onSubmit, children, ...props}: FormProps) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    const {errors} = formHelpers
+    for (const [, value] of Object.entries(errors)) {
+      if (value) {
+        // If an error is currently active, we prevent the default and don't run the submit
+        e.preventDefault()
+        return
+      }
+    }
+    onSubmit(e)
+  }
+
   return (
-    <FormContext.Provider value={(formHelpers as unknown) as FormContext}>
-      <form onSubmit={onSubmit} {...props}>
+    <FormContext.Provider value={formHelpers}>
+      <form onSubmit={handleSubmit} {...props}>
         {children}
       </form>
     </FormContext.Provider>
