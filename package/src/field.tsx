@@ -29,7 +29,7 @@ type Checkbox = {
 }
 
 type TextField = {
-  type?: "text"
+  type?: "text" | "email" | "password"
   name: string
   element?: JSX.Element
   className?: string
@@ -45,20 +45,20 @@ type Radio = {
 
 type FieldProps = Checkbox | Radio | Select | Textarea | TextField
 
-function Field({name, ...props}: FieldProps) {
+function Field({name, element, ...props}: FieldProps) {
   const {values, handleChange} = useFormContext()
   const value = values[name] as string
 
   switch (props.type) {
     case "select":
-      if (props.element) {
+      if (element) {
         return (
           <CustomSelect
             name={name}
             onChange={handleChange}
             value={value}
             {...props}>
-            {props.element}
+            {element}
           </CustomSelect>
         )
       } else {
@@ -78,14 +78,14 @@ function Field({name, ...props}: FieldProps) {
         )
       }
     case "textarea":
-      if (props.element) {
+      if (element) {
         return (
           <PropDriller
             name={name}
             onChange={handleChange}
             value={value}
             {...props}>
-            {props.element}
+            {element}
           </PropDriller>
         )
       } else {
@@ -101,14 +101,14 @@ function Field({name, ...props}: FieldProps) {
         )
       }
     default:
-      if (props.element) {
+      if (element) {
         return (
           <PropDriller
             name={name}
             value={value}
             onChange={handleChange}
             {...props}>
-            {props.element}
+            {element}
           </PropDriller>
         )
       } else {
