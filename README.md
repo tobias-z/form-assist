@@ -183,6 +183,46 @@ function handleSubmit(event) {
 ---
 
 <p>
+<details><summary><strong>useValidation</strong></summary>
+
+If you want your form to have validation, the **useValidation** hook will help
+you out.
+
+All you have to do, is provide the _values_ given to you, from the **useForm**
+hook.
+
+```jsx
+import {useValidation} from "form-assist"
+
+const formHelpers = useForm(initialValues)
+const {values} = formHelpers
+const validation = useValidation(values, {
+  example: {
+    required: true,
+    minCharacters: 5,
+    maxCharacters: 10,
+  },
+})
+```
+
+All of this is typed, so it's really easy to figure out what you can pass to the
+objects...
+
+You will then have to provide the _validation_ object that is returned from the
+useValidation hook, into your Form component's props like so:
+
+```jsx
+return <Form validation={validation}></Form>
+```
+
+And that's it! You now have validation on your fields.
+
+</details>
+</p>
+
+---
+
+<p>
 <details><summary><strong>Form</strong></summary>
 
 ### Form
