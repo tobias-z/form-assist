@@ -1,17 +1,12 @@
-import {useForm, Field, Form} from "form-assist"
+import {useForm, Field, Form, useValidation} from "form-assist"
 import Select from "./components/select"
+import TextField from "./components/text-field"
 
 function App() {
-  const formHelpers = useForm({test: "", boolean: true})
-  const {
-    values,
-    setValues,
-    errors,
-    setErrors,
-    handleChange,
-    resetForm,
-  } = formHelpers
-  console.log(formHelpers.errors)
+  const formHelpers = useForm({test: "", name: ""})
+  const validation = useValidation(formHelpers.values, {
+    name: {required: true},
+  })
 
   const array = [
     {id: 1, value: "Cat"},
@@ -30,13 +25,16 @@ function App() {
       </button>
       <Form
         formHelpers={formHelpers}
+        validation={validation}
         onSubmit={e => {
           e.preventDefault()
           console.log(formHelpers.values)
           formHelpers.resetForm()
         }}>
         <Field name="test" type="select" element={<Select />} options={array} />
-        {formHelpers.errors.test && formHelpers.errors.test}
+        <p>{formHelpers.errors.name ? formHelpers.errors.name : null}</p>
+        <Field name="name" element={<TextField />} />
+        <pre>{JSON.stringify(formHelpers.errors, null, 2)}</pre>
         <button>Submit</button>
       </Form>
     </div>
