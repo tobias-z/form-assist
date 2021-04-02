@@ -1,6 +1,7 @@
 import * as React from "react"
 import {useValidationContext} from "./form"
 import type {Errors} from "./use-form"
+import validateErrors from "./validate-errors"
 
 type TFormContext = {
   values: Record<string, unknown>
@@ -19,53 +20,6 @@ function useFormContext() {
     throw new Error("Form helpers were used outside of a the Form component")
   }
   return context
-}
-
-type ValidationProps<TValidation> = {
-  errors: Errors<unknown>
-  setErrors: React.Dispatch<React.SetStateAction<Errors<unknown>>>
-  targetName: string
-  newValue: string | boolean
-  context: TValidation
-}
-
-function validateErrors<TValidation>({
-  errors,
-  setErrors,
-  targetName,
-  newValue,
-  context,
-}: ValidationProps<TValidation>) {
-  console.log({errors, setErrors, targetName, newValue, context})
-  let error = ""
-  if (context) {
-    // Looping through the context values
-    for (const [key, requirements] of Object.entries(context)) {
-      if (key !== targetName) continue
-      setErrors({
-        ...errors,
-        [key]: "",
-      })
-      if (typeof requirements === "object" && requirements !== null) {
-        // Loop through each given validation type
-        for (const [validationType, givenValue] of Object.entries(
-          requirements
-        )) {
-          if (validationType === "required" && givenValue === true) {
-            console.log(newValue)
-            if (!newValue) {
-              setErrors({
-                ...errors,
-                [key]: "This field is required",
-              })
-              error = "This field is required"
-            }
-          }
-        }
-      }
-    }
-  }
-  return error
 }
 
 type Props = {
@@ -91,7 +45,17 @@ function FormProvider({formHelpers, onSubmit, children, ...props}: Props) {
         }
         setValues({...values, [targetName]: newValue})
 
-        validateErrors({errors, newValue, setErrors, targetName, context})
+        const newError = validateErrors({
+          errors,
+          newValue,
+          setErrors,
+          targetName,
+          context,
+        })
+        setErrors({
+          ...errors,
+          [targetName]: newError,
+        })
       },
     }
   }
@@ -116,10 +80,10 @@ function FormProvider({formHelpers, onSubmit, children, ...props}: Props) {
           }),
         }
       }
+      setErrors(newErrors)
     }
 
     for (const [, value] of Object.entries(newErrors)) {
-      console.log(value)
       if (value) {
         // If an error is currently active, we prevent the default and don't run the submit
         e.preventDefault()

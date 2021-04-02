@@ -3,8 +3,8 @@ import * as React from "react"
 type TValidation<TValues> = {
   [key in keyof TValues]?: {
     required?: boolean
-    // maxCharacters?: number
-    // minCharacters?: number
+    maxCharacters?: number
+    minCharacters?: number
   }
 }
 
