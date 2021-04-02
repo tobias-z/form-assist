@@ -271,6 +271,18 @@ return (
 </details>
 </p>
 
+<p>
+<details><summary><strong>validation</strong></summary>
+
+### validation
+
+This is an object with error validation options.
+
+Read more about this under the **useValidation** hook section
+
+</details>
+</p>
+
 </details>
 </p>
 
