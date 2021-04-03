@@ -39,7 +39,7 @@ const initialValues = {
   example: "",
 }
 
-const formHelpers = useForm(initialValues)
+const {formHelpers} = useFormAssist(initialValues)
 
 function handleSubmit(event) {
   event.preventDefault()
@@ -56,16 +56,19 @@ return (
 ```
 
 <p>
-<details><summary><strong>useForm</strong></summary>
+<details><summary><strong>useFormAssist</strong></summary>
 
 ```jsx
-import {useForm} from "form-assist"
+import {useFormAssist} from "form-assist"
 
 const initialValues = {
   example: "",
 }
 
-const formHelpers = useForm(initialValues)
+const {formHelpers, validation} = useFormAssist(
+  initialValues,
+  validationOptions
+)
 const {
   values,
   setValues,
@@ -75,6 +78,37 @@ const {
   resetForm,
 } = formHelpers
 ```
+
+## Validation
+
+Form assist has validation build in, so you don't have to do any fancy things
+yourself 🥳
+
+All you have to do is provide a second parameter, to the useFormAssist hook.
+
+```jsx
+const {formHelpers, validation} = useFormAssist(initialValues, {
+  example: {
+    required: true,
+    minCharacters: 5,
+    maxCharacters: 10,
+  },
+})
+```
+
+All of this is typed, so it's really easy to figure out what you can pass to the
+objects...
+
+You will then have to provide the _validation_ object that is returned from the
+useValidation hook, into your Form component's props like so:
+
+```jsx
+return <Form validation={validation}></Form>
+```
+
+And that's it! You now have validation on your fields.
+
+## formHelpers
 
 <p>
 <details><summary><strong>values</strong></summary>
@@ -183,46 +217,6 @@ function handleSubmit(event) {
 ---
 
 <p>
-<details><summary><strong>useValidation</strong></summary>
-
-If you want your form to have validation, the **useValidation** hook will help
-you out.
-
-All you have to do, is provide the _values_ given to you, from the **useForm**
-hook.
-
-```jsx
-import {useValidation} from "form-assist"
-
-const formHelpers = useForm(initialValues)
-const {values} = formHelpers
-const validation = useValidation(values, {
-  example: {
-    required: true,
-    minCharacters: 5,
-    maxCharacters: 10,
-  },
-})
-```
-
-All of this is typed, so it's really easy to figure out what you can pass to the
-objects...
-
-You will then have to provide the _validation_ object that is returned from the
-useValidation hook, into your Form component's props like so:
-
-```jsx
-return <Form validation={validation}></Form>
-```
-
-And that's it! You now have validation on your fields.
-
-</details>
-</p>
-
----
-
-<p>
 <details><summary><strong>Form</strong></summary>
 
 ### Form
@@ -278,7 +272,7 @@ return (
 
 This is an object with error validation options.
 
-Read more about this under the **useValidation** hook section
+Read more about this under the **useFormAssist** hook section
 
 </details>
 </p>
@@ -299,8 +293,10 @@ change which props needs to be given, for that specific type.
 
 ```jsx
 return (
-  <Field type="radio" name="example" value="I will be this value" />
-  <Field type="radio" name="example" value="Another value" />
+  <>
+    <Field type="radio" name="example" value="I will be this value" />
+    <Field type="radio" name="example" value="Another value" />
+  </>
 )
 ```
 
