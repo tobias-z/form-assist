@@ -5,6 +5,7 @@ type PropDrillerProps = {
   name: string
   value: string
   onChange: unknown
+  onBlur: unknown
 }
 
 function PropDriller({children, ...props}: PropDrillerProps) {

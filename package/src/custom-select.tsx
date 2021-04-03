@@ -9,6 +9,7 @@ type CustomSelectProps = {
   name: string
   value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 function CustomSelect({
@@ -17,13 +18,14 @@ function CustomSelect({
   name,
   value,
   onChange,
+  onBlur,
   ...props
 }: CustomSelectProps) {
   const selectWithOptions = React.Children.map(children, child => {
     if (React.isValidElement(child)) {
       return React.cloneElement(
         child,
-        {name, value, onChange, ...props},
+        {name, value, onChange, onBlur, ...props},
         options.map(option => (
           <option key={option.id} value={option.value} {...props}>
             {option.value}

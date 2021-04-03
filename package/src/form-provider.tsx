@@ -1,6 +1,6 @@
 import * as React from "react"
 import {useValidationContext} from "./form"
-import type {Errors} from "./use-form"
+import type {Errors, Touched} from "./use-form"
 import validateErrors from "./validate-errors"
 
 type TFormContext = {
@@ -8,8 +8,11 @@ type TFormContext = {
   setValues: React.Dispatch<React.SetStateAction<unknown>>
   errors: Errors<unknown>
   setErrors: React.Dispatch<React.SetStateAction<Errors<unknown>>>
+  touched: Touched<unknown>
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void
   resetForm: () => void
+  touchAllFields: () => void
 }
 
 const FormContext = React.createContext<TFormContext | null>(null)
@@ -83,6 +86,7 @@ function FormProvider({formHelpers, onSubmit, children, ...props}: Props) {
       setErrors(newErrors)
     }
 
+    // This should be values
     for (const [, value] of Object.entries(newErrors)) {
       if (value) {
         // If an error is currently active, we prevent the default and don't run the submit

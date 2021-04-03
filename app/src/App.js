@@ -1,32 +1,43 @@
+import * as React from "react"
 import {useForm, Field, Form, useValidation} from "form-assist"
-import Checkbox from "./components/checkbox"
-import TextField from "./components/text-field"
+
+const initialValues = {
+  name: "",
+  phoneNumber: "",
+}
 
 function App() {
-  const formHelpers = useForm({test: "", name: "", checkbox: false})
-  const validation = useValidation(formHelpers.values, {
-    name: {required: true, minCharacters: 5},
-    test: {required: true, maxCharacters: 10},
-    checkbox: {required: true},
+  const formHelpers = useForm(initialValues)
+  const {values, resetForm, errors, touched} = formHelpers
+  const validation = useValidation(values, {
+    phoneNumber: {
+      required: true,
+    },
+    name: {
+      minCharacters: 6,
+    },
   })
+  const [friends, setFriends] = React.useState([])
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    setFriends([...friends, values])
+    resetForm()
+  }
 
   return (
     <div>
-      <h1>Hello world</h1>
       <Form
         formHelpers={formHelpers}
-        validation={validation}
-        onSubmit={e => {
-          e.preventDefault()
-          console.log(formHelpers.values)
-          formHelpers.resetForm()
-        }}>
-        <Field name="test" element={<TextField />} />
-        <Field name="name" element={<TextField />} />
-        <Field name="checkbox" element={<Checkbox />} type="checkbox" />
-        <pre>{JSON.stringify(formHelpers.errors, null, 2)}</pre>
-        <button>Submit</button>
+        onSubmit={handleSubmit}
+        validation={validation}>
+        <Field name="name" />
+        <Field name="phoneNumber" placeholder="phone" />
+        <button>Add friend</button>
       </Form>
+      <pre>{JSON.stringify(friends, null, 22)}</pre>
+      <pre>{JSON.stringify(errors, null, 2)}</pre>
+      <pre>{JSON.stringify(touched, null, 2)}</pre>
     </div>
   )
 }
