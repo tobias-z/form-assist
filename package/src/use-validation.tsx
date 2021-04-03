@@ -5,6 +5,7 @@ type TValidation<TValues> = {
     required?: boolean
     maxCharacters?: number
     minCharacters?: number
+    email?: boolean
   }
 }
 

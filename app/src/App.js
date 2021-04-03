@@ -4,6 +4,7 @@ import {useForm, Field, Form, useValidation} from "form-assist"
 const initialValues = {
   name: "",
   phoneNumber: "",
+  email: "",
 }
 
 function App() {
@@ -15,6 +16,10 @@ function App() {
     },
     name: {
       minCharacters: 6,
+    },
+    email: {
+      required: true,
+      email: true,
     },
   })
   const [friends, setFriends] = React.useState([])
@@ -32,10 +37,11 @@ function App() {
         onSubmit={handleSubmit}
         validation={validation}>
         <Field name="name" />
-        <Field type="number" name="phoneNumber" placeholder="phone" />
+        <Field type="number" name="phoneNumber" placeholder="Phone number" />
+        <Field name="email" type="text" />
         <button>Add friend</button>
       </Form>
-      <pre>{JSON.stringify(friends, null, 22)}</pre>
+      <pre>{JSON.stringify(friends, null, 2)}</pre>
       <pre>{JSON.stringify(errors, null, 2)}</pre>
       <pre>{JSON.stringify(touched, null, 2)}</pre>
     </div>

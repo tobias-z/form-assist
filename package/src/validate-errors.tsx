@@ -62,9 +62,20 @@ function validateErrors<TValidation>({
             if (String(newValue).length < givenValue) {
               error = error
                 ? error +
-                  ` This field cannot be less than ${givenValue} charactors`
-                : `This field cannot be less than ${givenValue} charactors`
+                  ` This field cannot be less than ${givenValue} charactors.`
+                : `This field cannot be less than ${givenValue} charactors.`
             }
+          }
+
+          // Email validation
+          if (
+            validationType === "email" &&
+            givenValue === true &&
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(String(newValue))
+          ) {
+            error = error
+              ? error + ` Invalid email address.`
+              : `Invalid email address.`
           }
         }
       }

@@ -18,6 +18,7 @@ type Textarea = {
   type: "textarea"
   name: string
   element?: JSX.Element
+  placeholder?: string
   className?: string
 }
 
@@ -32,6 +33,7 @@ type TextField = {
   type?: "text" | "email" | "password" | "number"
   name: string
   element?: JSX.Element
+  placeholder?: string
   className?: string
 }
 
