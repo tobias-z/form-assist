@@ -1,6 +1,6 @@
 {
   "name": "form-assist",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": false,
   "description": "This is a form library designed to make forms easier using hooks",
   "main": "lib/index.js",
@@ -24,7 +24,9 @@
     "forms",
     "form",
     "hooks",
-    "react-dom"
+    "react-dom",
+    "validation",
+    "form validation"
   ],
   "author": "Tobias Zimmermann",
   "license": "MIT",

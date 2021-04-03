@@ -33,7 +33,7 @@ npm install --save form-assist
 ### Basic example
 
 ```jsx
-import {useForm, Form, Field} from "form-assist"
+import {useFormAssist, Form, Field} from "form-assist"
 
 const initialValues = {
   example: "",
