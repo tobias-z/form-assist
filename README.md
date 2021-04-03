@@ -74,8 +74,11 @@ const {
   setValues,
   errors,
   setErrors,
+  touched,
   handleChange,
+  handleBlur,
   resetForm,
+  touchAllFields,
 } = formHelpers
 ```
 
@@ -100,7 +103,7 @@ All of this is typed, so it's really easy to figure out what you can pass to the
 objects...
 
 You will then have to provide the _validation_ object that is returned from the
-useValidation hook, into your Form component's props like so:
+useFormAssist hook, into your Form component's props like so:
 
 ```jsx
 return <Form validation={validation}></Form>
@@ -167,6 +170,25 @@ setErrors({...errors, example: "Unknown example!"})
 </p>
 
 <p>
+<details><summary><strong>touched</strong></summary>
+
+### touched
+
+The touched object will hold the state of whether the fields have been touched
+or not.
+
+It can be very usefull together with the error state.
+
+```jsx
+const {errors, touched} = formHelpers
+
+const isThouchedAndError = errors.example && touched.example
+```
+
+</details>
+</p>
+
+<p>
 <details><summary><strong>handleChange</strong></summary>
 
 ### handleChange
@@ -181,6 +203,28 @@ return (
   <>
     <Form>
       <input name="example" value={values.example} onChange={handleChange}>
+    </Form>
+  </>
+)
+```
+
+</details>
+</p>
+
+<p>
+<details><summary><strong>handleBlur</strong></summary>
+
+### handleBlur
+
+This function will take care of setting a field to touched on blur.
+
+```jsx
+const {values, handleBlur} = formHelpers
+
+return (
+  <>
+    <Form>
+      <input name="example" value={values.example} onBlur={handleBlur}>
     </Form>
   </>
 )
@@ -207,6 +251,17 @@ function handleSubmit(event) {
   console.log("I have been reset 😿", values)
 }
 ```
+
+</details>
+</p>
+
+<p>
+<details><summary><strong>touchAllFields</strong></summary>
+
+### touchAllFields
+
+If at any point you wish to make of the fields touched, this function can be
+called, and it will do just that 👌
 
 </details>
 </p>
