@@ -1,6 +1,6 @@
 {
   "name": "form-assist",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "private": false,
   "description": "This is a form library designed to make forms easier using hooks",
   "main": "lib/index.js",

@@ -4,11 +4,11 @@ import type {Errors, Touched} from "./use-form"
 import validateErrors from "./validate-errors"
 
 type TFormContext = {
-  values: Record<string, unknown>
-  setValues: React.Dispatch<React.SetStateAction<unknown>>
-  errors: Errors<unknown>
-  setErrors: React.Dispatch<React.SetStateAction<Errors<unknown>>>
-  touched: Touched<unknown>
+  values: Record<string, any>
+  setValues: React.Dispatch<React.SetStateAction<any>>
+  errors: Errors<any>
+  setErrors: React.Dispatch<React.SetStateAction<Errors<any>>>
+  touched: Touched<any>
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleBlur: (e: React.FocusEvent<HTMLInputElement>) => void
   resetForm: () => void
@@ -68,7 +68,7 @@ function FormProvider({formHelpers, onSubmit, children, ...props}: Props) {
     touchAllFields()
 
     // Validate errors before submit
-    let newErrors: Record<string, unknown> = {}
+    let newErrors: Record<string, any> = {}
     if (context) {
       for (const [targetName, value] of Object.entries(values)) {
         let newValue = value
