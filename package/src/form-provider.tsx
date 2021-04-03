@@ -33,7 +33,7 @@ type Props = {
 
 function FormProvider({formHelpers, onSubmit, children, ...props}: Props) {
   const context = useValidationContext()
-  const {setErrors, errors, setValues, values} = formHelpers
+  const {setErrors, errors, setValues, values, touchAllFields} = formHelpers
 
   if (context) {
     formHelpers = {
@@ -64,6 +64,9 @@ function FormProvider({formHelpers, onSubmit, children, ...props}: Props) {
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    // I think submitting is kind of the same as touching all of the fields
+    touchAllFields()
+
     // Validate errors before submit
     let newErrors: Record<string, unknown> = {}
     if (context) {

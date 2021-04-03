@@ -32,7 +32,7 @@ function App() {
         onSubmit={handleSubmit}
         validation={validation}>
         <Field name="name" />
-        <Field name="phoneNumber" placeholder="phone" />
+        <Field type="number" name="phoneNumber" placeholder="phone" />
         <button>Add friend</button>
       </Form>
       <pre>{JSON.stringify(friends, null, 22)}</pre>

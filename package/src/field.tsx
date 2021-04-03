@@ -29,7 +29,7 @@ type Checkbox = {
 }
 
 type TextField = {
-  type?: "text" | "email" | "password"
+  type?: "text" | "email" | "password" | "number"
   name: string
   element?: JSX.Element
   className?: string
