@@ -6,11 +6,15 @@ import {FormProvider} from "./form-provider"
 type FormProps = {
   formHelpers: TFormContext
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
-  validation: TValidation<unknown>
+  validation?: TValidation<unknown>
+  className?: string
+  style?: React.CSSProperties
   children: React.ReactNode
 }
 
-const ValidationContext = React.createContext<TValidation<unknown> | null>(null)
+const ValidationContext = React.createContext<TValidation<unknown> | undefined>(
+  undefined
+)
 const useValidationContext = () => React.useContext(ValidationContext)
 
 function Form({

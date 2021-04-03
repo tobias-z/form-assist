@@ -12,6 +12,7 @@ type Select = {
   }>
   element?: JSX.Element
   className?: string
+  style?: React.CSSProperties
 }
 
 type Textarea = {
@@ -20,6 +21,7 @@ type Textarea = {
   element?: JSX.Element
   placeholder?: string
   className?: string
+  style?: React.CSSProperties
 }
 
 type Checkbox = {
@@ -27,6 +29,7 @@ type Checkbox = {
   name: string
   element?: JSX.Element
   className?: string
+  style?: React.CSSProperties
 }
 
 type TextField = {
@@ -35,6 +38,7 @@ type TextField = {
   element?: JSX.Element
   placeholder?: string
   className?: string
+  style?: React.CSSProperties
 }
 
 type Radio = {
@@ -43,6 +47,7 @@ type Radio = {
   value: string
   element?: JSX.Element
   className?: string
+  style?: React.CSSProperties
 }
 
 type FieldProps = Checkbox | Radio | Select | Textarea | TextField

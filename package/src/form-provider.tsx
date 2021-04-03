@@ -28,6 +28,8 @@ function useFormContext() {
 type Props = {
   formHelpers: TFormContext
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  className?: string
+  style?: React.CSSProperties
   children: React.ReactNode
 }
 
