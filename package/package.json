@@ -4,7 +4,7 @@
   "private": false,
   "description": "This is a form library designed to make forms easier using hooks",
   "main": "lib/index.js",
-  "types": "lib",
+  "types": "lib/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/tobias-z/form-assist"
