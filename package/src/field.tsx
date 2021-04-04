@@ -1,58 +1,45 @@
 import * as React from "react"
-import CustomSelect from "./custom-select"
-import {useFormContext} from "./form-provider"
-import PropDriller from "./prop-driller"
+import {useFormContext} from "./form"
+import type * as TForm from "./types"
 
-type Select = {
-  type: "select"
-  name: string
-  options: Array<{
-    id: number | string
-    value: string
-  }>
-  element?: JSX.Element
-  className?: string
-  style?: React.CSSProperties
+function CustomSelect({
+  children,
+  options,
+  name,
+  value,
+  onChange,
+  onBlur,
+  ...props
+}: TForm.CustomSelectProps) {
+  const selectWithOptions = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(
+        child,
+        {name, value, onChange, onBlur, ...props},
+        options.map(option => (
+          <option key={option.id} value={option.value} {...props}>
+            {option.value}
+          </option>
+        ))
+      )
+    }
+    return child
+  })
+
+  return <>{selectWithOptions}</>
 }
 
-type Textarea = {
-  type: "textarea"
-  name: string
-  element?: JSX.Element
-  placeholder?: string
-  className?: string
-  style?: React.CSSProperties
+function PropDriller({children, ...props}: TForm.PropDrillerProps) {
+  const childrenWithProps = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child, props)
+    }
+    return child
+  })
+  return <>{childrenWithProps}</>
 }
 
-type Checkbox = {
-  type: "checkbox"
-  name: string
-  element?: JSX.Element
-  className?: string
-  style?: React.CSSProperties
-}
-
-type TextField = {
-  type?: "text" | "email" | "password" | "number"
-  name: string
-  element?: JSX.Element
-  placeholder?: string
-  className?: string
-  style?: React.CSSProperties
-}
-
-type Radio = {
-  type: "radio"
-  name: string
-  value: string
-  element?: JSX.Element
-  className?: string
-  style?: React.CSSProperties
-}
-
-type FieldProps = Checkbox | Radio | Select | Textarea | TextField
-
-function Field({name, element, ...props}: FieldProps) {
+function Field({name, element, ...props}: TForm.FieldProps) {
   const {values, handleChange, handleBlur} = useFormContext()
   const value = values[name] as string
 

@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Form, Field, useFormAssist} from "form-assist"
+import {Form, Field, useFormAssist} from "form-assist/lib/index"
 
 const initialValues = {
   name: "",
