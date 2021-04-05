@@ -12,7 +12,11 @@ function useValidation<TValues>(
   return validation
 }
 
-function useForm<TValues>(initialValues: TValues) {
+function useForm<TValues>(
+  initialValues: TValues,
+  values: TValues,
+  setValues: React.Dispatch<React.SetStateAction<TValues>>
+) {
   function setInitialErrors() {
     let errors: TForm.Errors<TValues> = {}
     for (const key of Object.keys(initialValues)) {
@@ -29,7 +33,6 @@ function useForm<TValues>(initialValues: TValues) {
     return touched
   }
 
-  const [values, setValues] = React.useState<TValues>(initialValues)
   const [errors, setErrors] = React.useState<TForm.Errors<TValues>>(() =>
     setInitialErrors()
   )
@@ -62,8 +65,6 @@ function useForm<TValues>(initialValues: TValues) {
   }
 
   const formHelpers = {
-    values,
-    setValues,
     errors,
     setErrors,
     touched,
@@ -81,9 +82,72 @@ function useFormAssist<TValues>(
   initialValues: TValues,
   validationOptions: TForm.TValidation<TValues> = {}
 ) {
-  const formHelpers = useForm(initialValues)
+  const [values, setValues] = React.useState<TValues>(initialValues)
+  const {
+    errors,
+    setErrors,
+    touched,
+    handleChange,
+    handleBlur,
+    resetForm,
+    touchAllFields,
+  } = useForm(initialValues, values, setValues)
   const validation = useValidation(initialValues, validationOptions)
+
+  const formHelpers = {
+    values,
+    setValues,
+    errors,
+    setErrors,
+    touched,
+    handleChange,
+    handleBlur,
+    resetForm,
+    touchAllFields,
+  }
   return {formHelpers, validation}
 }
 
-export default useFormAssist
+function useFormAssistStorage<TValues>(
+  localStoageKey: string,
+  initialValues: TValues,
+  validationOptions: TForm.TValidation<TValues> = {}
+) {
+  const [values, setValues] = React.useState<TValues>(() => {
+    return JSON.parse(
+      window.localStorage.getItem(localStoageKey) ||
+        JSON.stringify(initialValues)
+    )
+  })
+
+  React.useEffect(() => {
+    // set local storage
+    window.localStorage.setItem(localStoageKey, JSON.stringify(values))
+  }, [values])
+
+  const {
+    errors,
+    setErrors,
+    touched,
+    handleChange,
+    handleBlur,
+    resetForm,
+    touchAllFields,
+  } = useForm(initialValues, values, setValues)
+  const validation = useValidation(initialValues, validationOptions)
+
+  const formHelpers = {
+    values,
+    setValues,
+    errors,
+    setErrors,
+    touched,
+    handleChange,
+    handleBlur,
+    resetForm,
+    touchAllFields,
+  }
+  return {formHelpers, validation}
+}
+
+export {useFormAssist, useFormAssistStorage}

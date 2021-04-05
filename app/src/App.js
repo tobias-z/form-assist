@@ -1,16 +1,20 @@
 import * as React from "react"
-import {Form, Field, useFormAssist} from "form-assist/lib/index"
+import {Form, Field, useFormAssistStorage} from "form-assist/lib/index"
 
 const initialValues = {
   name: "",
 }
 
 function App() {
-  const {formHelpers, validation} = useFormAssist(initialValues, {
-    name: {
-      required: true,
-    },
-  })
+  const {formHelpers, validation} = useFormAssistStorage(
+    "test: my-key",
+    initialValues,
+    {
+      name: {
+        required: true,
+      },
+    }
+  )
   const {values, resetForm} = formHelpers
 
   function handleSubmit(e) {
