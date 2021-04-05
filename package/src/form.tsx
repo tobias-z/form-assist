@@ -130,6 +130,8 @@ function FormProvider({
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
     // I think submitting is kind of the same as touching all of the fields
     touchAllFields()
 
@@ -141,6 +143,10 @@ function FormProvider({
         if (!value) {
           newValue = ""
         }
+        /* 
+          Because of the way state works, we have to create a new object with the errors
+          to be able to check if they exist in the forloop later
+        */
         newErrors = {
           ...newErrors,
           [targetName]: validateErrors({
@@ -155,14 +161,12 @@ function FormProvider({
       setErrors(newErrors)
     }
 
-    // This should be values
-    for (const [, value] of Object.entries(newErrors)) {
-      if (value) {
-        // If an error is currently active, we prevent the default and don't run the submit
-        e.preventDefault()
-        return
-      }
+    // If an error is currently active, we don't run the submit
+    for (const value of Object.values(newErrors)) {
+      if (value) return
     }
+
+    // Run the users onSubmit function
     onSubmit(e)
   }
 

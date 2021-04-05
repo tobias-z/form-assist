@@ -120,6 +120,10 @@ function useFormAssistStorage<TValues>(
     )
   })
 
+  function deleteStorage() {
+    window.localStorage.removeItem(localStoageKey)
+  }
+
   React.useEffect(() => {
     // set local storage
     window.localStorage.setItem(localStoageKey, JSON.stringify(values))
@@ -146,6 +150,7 @@ function useFormAssistStorage<TValues>(
     handleBlur,
     resetForm,
     touchAllFields,
+    deleteStorage,
   }
   return {formHelpers, validation}
 }
