@@ -273,6 +273,32 @@ called, and it will do just that 👌
 ---
 
 <p>
+<details><summary><strong>useFormAssistStorage</strong></summary>
+
+### Local Storage support
+
+If you want your form to be persisted through local storage. The
+**useFormAssistStorage** hook is exactly what you need.
+
+It works exactly like **useFormAssist**, except you have to pass it a
+local-storage key aswell.
+
+```jsx
+import {useFormAssistStorage} from "form-assist"
+
+const {formHelpers, validation} = useFormAssistStorage(
+  localStorageKey,
+  initialValues,
+  validationOptions
+)
+```
+
+</details>
+</p>
+
+---
+
+<p>
 <details><summary><strong>Form</strong></summary>
 
 ### Form
@@ -287,10 +313,10 @@ Form, it will need a few properties to function properly 💪
 
 The Form component needs to know which values, that it is working with..
 Therefor, we pass it all of the formHelpers that you recieved whenever you
-called `useForm()`
+called `useFormAssist()`
 
 ```jsx
-const formHelpers = useForm(initialValues)
+const {formHelpers} = useFormAssist(initialValues)
 
 return <Form formHelpers={formHelpers}></Form>
 ```
@@ -309,7 +335,7 @@ called, it will check whether or not an error is pressent.
 If no error is found, it will call your onSubmit.
 
 ```jsx
-const formHelpers = useForm(initialValues)
+const {formHelpers} = useFormAssist(initialValues)
 
 return (
   <Form
