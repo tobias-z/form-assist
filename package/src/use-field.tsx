@@ -6,8 +6,6 @@ function useField(fieldName: string) {
     handleChange,
     handleBlur,
     errors,
-    setErrors,
-    setValues,
     touched: allTouched,
   } = useFormContext()
   const value = values[fieldName] as string
@@ -16,12 +14,10 @@ function useField(fieldName: string) {
 
   const toReturn = {
     value,
-    setValues,
     error,
-    setErrors,
     touched,
-    handleChange,
-    handleBlur,
+    onChange: handleChange,
+    onBlur: handleBlur,
   }
 
   return toReturn
