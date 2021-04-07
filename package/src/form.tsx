@@ -19,56 +19,141 @@ function validateErrors<TValidation>({
       })
       if (typeof requirements === "object" && requirements !== null) {
         // Loop through each given validation type
-        for (const [validationType, givenValue] of Object.entries(
+        for (const [validationType, givenObject] of Object.entries(
           requirements
         )) {
-          // Checking whether the field is required
+          // Is the field required
+          // Checking whether the field has an object of validationOptions
           // If it is, does it have a value
           if (
             validationType === "required" &&
-            givenValue === true &&
+            typeof givenObject === "object" &&
+            givenObject !== null &&
             !newValue
           ) {
-            error = error
-              ? error + ` This field is required.`
-              : `This field is required.`
+            let isRequired = false
+            for (const [optionKey, optionValue] of Object.entries(
+              givenObject
+            )) {
+              if (optionKey === "is" && optionValue === true) {
+                isRequired = true
+              }
+              if (
+                optionKey === "errorMessage" &&
+                typeof optionValue === "string"
+              ) {
+                // If there is an error we put the message on top of it, otherwise we just use this one
+                error = error ? error + ` ${optionValue}` : optionValue
+              } else if (isRequired) {
+                // If no message is given we just use our generic one
+                error = error
+                  ? error + ` This field is required.`
+                  : `This field is required.`
+              }
+            }
           }
 
           // Max charcters
           if (
             validationType === "maxCharacters" &&
-            typeof givenValue === "number"
+            typeof givenObject === "object" &&
+            givenObject !== null
           ) {
-            if (String(newValue).length > givenValue) {
-              error = error
-                ? error +
-                  ` This field cannot be more than ${givenValue} charactors long.`
-                : `This field cannot be more than ${givenValue} charactors long.`
+            let isError = false
+            let maxCharactors: number
+            // Looping the options of validation
+            for (const [optionKey, optionValue] of Object.entries(
+              givenObject
+            )) {
+              // Each item in this loop is a validation option
+              if (optionKey === "is" && typeof optionValue === "number") {
+                // The new value in the form is not long enough
+                if (String(newValue).length > optionValue) {
+                  isError = true
+                  maxCharactors = optionValue
+                }
+              } else if (
+                optionKey === "errorMessage" &&
+                typeof optionValue === "string" &&
+                isError
+              ) {
+                error = error ? error + ` ${optionValue}` : optionValue
+              } else if (isError) {
+                error = error
+                  ? error +
+                    ` This field cannot be more than ${maxCharactors!} charactors long.`
+                  : `This field cannot be more than ${maxCharactors!} charactors long.`
+              }
             }
           }
 
           // Min charcters
           if (
             validationType === "minCharacters" &&
-            typeof givenValue === "number"
+            typeof givenObject === "object" &&
+            givenObject !== null
           ) {
-            if (String(newValue).length < givenValue) {
-              error = error
-                ? error +
-                  ` This field cannot be less than ${givenValue} charactors.`
-                : `This field cannot be less than ${givenValue} charactors.`
+            let isError = false
+            let minCharactors: number
+            // Looping the options of validation
+            for (const [optionKey, optionValue] of Object.entries(
+              givenObject
+            )) {
+              // Each item in this loop is a validation option
+              if (optionKey === "is" && typeof optionValue === "number") {
+                // The new value in the form is not long enough
+                if (String(newValue).length < optionValue) {
+                  isError = true
+                  minCharactors = optionValue
+                }
+              } else if (
+                optionKey === "errorMessage" &&
+                typeof optionValue === "string" &&
+                isError
+              ) {
+                error = error ? error + ` ${optionValue}` : optionValue
+              } else if (isError) {
+                error = error
+                  ? error +
+                    ` This field cannot be less than ${minCharactors!} charactors.`
+                  : `This field cannot be less than ${minCharactors!} charactors.`
+              }
             }
           }
 
           // Email validation
           if (
             validationType === "email" &&
-            givenValue === true &&
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(String(newValue))
+            typeof givenObject === "object" &&
+            givenObject !== null
           ) {
-            error = error
-              ? error + ` Invalid email address.`
-              : `Invalid email address.`
+            let isError = false
+            // Each item in this loop is a validation option
+            for (const [optionKey, optionValue] of Object.entries(
+              givenObject
+            )) {
+              if (optionKey === "is" && typeof optionValue === "boolean") {
+                if (
+                  !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                    String(newValue)
+                  )
+                ) {
+                  // If the email is invalid we set isError to true
+                  isError = true
+                }
+                // We are either using the given errorMessage or our own
+              } else if (
+                optionKey === "errorMessage" &&
+                typeof optionValue === "string" &&
+                isError
+              ) {
+                error = error ? error + ` ${optionValue}` : optionValue
+              } else if (isError) {
+                error = error
+                  ? error + ` Invalid email address.`
+                  : `Invalid email address.`
+              }
+            }
           }
         }
       }

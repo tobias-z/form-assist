@@ -1,9 +1,21 @@
 type TValidation<TValues> = {
   [key in keyof TValues]?: {
-    required?: boolean
-    maxCharacters?: number
-    minCharacters?: number
-    email?: boolean
+    required?: {
+      is: boolean
+      errorMessage: string
+    }
+    maxCharacters?: {
+      is: number
+      errorMessage: string
+    }
+    minCharacters?: {
+      is: number
+      errorMessage: string
+    }
+    email?: {
+      is: true
+      errorMessage: string
+    }
   }
 }
 
