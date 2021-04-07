@@ -401,11 +401,9 @@ function MyTextField({name, label, ...props}) {
   return (
     <Form.Group controlId={name}>
       {label && <Form.Label>{label}</Form.Label>}
-      <Form.Control {...field} {...props} isInvalid={!!errorText} />
-      {errorText && (
-        <Form.Control.Feedback type="invalid">
-          {errorText}
-        </Form.Control.Feedback>
+      <Form.Control {...field} {...props} isInvalid={!!isError} />
+      {isError && (
+        <Form.Control.Feedback type="invalid">{isError}</Form.Control.Feedback>
       )}
     </Form.Group>
   )
