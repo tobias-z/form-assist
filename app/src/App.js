@@ -1,21 +1,34 @@
 import * as React from "react"
-import {Form, Field, useFormAssistStorage} from "form-assist/lib/index"
+import {Form, Field, useFormAssist} from "form-assist/lib/index"
+import TextField from "./components/text-field"
 
 const initialValues = {
   name: "",
+  lastName: "",
+  email: "",
 }
 
 function App() {
-  const {formHelpers, validation} = useFormAssistStorage(
-    "test: my-key",
-    initialValues,
-    {
-      name: {
-        required: true,
+  const {formHelpers, validation} = useFormAssist(initialValues, {
+    name: {
+      required: {
+        is: true,
+        errorMessage: "You have to give us your name",
       },
-    }
-  )
-  const {values, resetForm} = formHelpers
+    },
+    lastName: {
+      minCharacters: {
+        is: 10,
+        errorMessage: "This is an error",
+      },
+    },
+    email: {
+      email: {
+        is: true,
+      },
+    },
+  })
+  const {resetForm, values, errors} = formHelpers
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -30,7 +43,11 @@ function App() {
         validation={validation}
         onSubmit={handleSubmit}>
         <Field name="name" />
+        <TextField name="lastName" placeholder="Lastname" />
+        <TextField name="email" placeholder="email" />
+        <button type="submit">Submit</button>
       </Form>
+      <pre>{JSON.stringify(errors, null, 2)}</pre>
     </div>
   )
 }

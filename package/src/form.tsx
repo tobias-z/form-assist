@@ -32,6 +32,7 @@ function validateErrors<TValidation>({
             !newValue
           ) {
             let isRequired = false
+            let errorMessage = ""
             for (const [optionKey, optionValue] of Object.entries(
               givenObject
             )) {
@@ -42,14 +43,17 @@ function validateErrors<TValidation>({
                 optionKey === "errorMessage" &&
                 typeof optionValue === "string"
               ) {
-                // If there is an error we put the message on top of it, otherwise we just use this one
-                error = error ? error + ` ${optionValue}` : optionValue
-              } else if (isRequired) {
-                // If no message is given we just use our generic one
-                error = error
-                  ? error + ` This field is required.`
-                  : `This field is required.`
+                errorMessage = optionValue
               }
+            }
+
+            // If there is an error we put the message on top of it, otherwise we just use this one
+            if (isRequired && errorMessage) {
+              error = error ? error + ` ${errorMessage}` : errorMessage
+            } else if (isRequired) {
+              error = error
+                ? error + ` This field is required.`
+                : `This field is required.`
             }
           }
 
@@ -60,14 +64,15 @@ function validateErrors<TValidation>({
             givenObject !== null
           ) {
             let isError = false
-            let maxCharactors: number
+            let maxCharactors: number | undefined = undefined
+            let errorMessage = ""
             // Looping the options of validation
             for (const [optionKey, optionValue] of Object.entries(
               givenObject
             )) {
               // Each item in this loop is a validation option
               if (optionKey === "is" && typeof optionValue === "number") {
-                // The new value in the form is not long enough
+                // The new value in the form is too long
                 if (String(newValue).length > optionValue) {
                   isError = true
                   maxCharactors = optionValue
@@ -77,13 +82,18 @@ function validateErrors<TValidation>({
                 typeof optionValue === "string" &&
                 isError
               ) {
-                error = error ? error + ` ${optionValue}` : optionValue
-              } else if (isError) {
-                error = error
-                  ? error +
-                    ` This field cannot be more than ${maxCharactors!} charactors long.`
-                  : `This field cannot be more than ${maxCharactors!} charactors long.`
+                errorMessage = optionValue
               }
+            }
+
+            // If an error was present we update the error string
+            if (isError && maxCharactors && errorMessage) {
+              error = error ? error + ` ${errorMessage}` : errorMessage
+            } else if (isError) {
+              error = error
+                ? error +
+                  ` This field cannot be more than ${maxCharactors!} characters long.`
+                : `This field cannot be more than ${maxCharactors!} characters long.`
             }
           }
 
@@ -94,7 +104,8 @@ function validateErrors<TValidation>({
             givenObject !== null
           ) {
             let isError = false
-            let minCharactors: number
+            let minCharactors: number | undefined = undefined
+            let errorMessage = ""
             // Looping the options of validation
             for (const [optionKey, optionValue] of Object.entries(
               givenObject
@@ -111,13 +122,18 @@ function validateErrors<TValidation>({
                 typeof optionValue === "string" &&
                 isError
               ) {
-                error = error ? error + ` ${optionValue}` : optionValue
-              } else if (isError) {
-                error = error
-                  ? error +
-                    ` This field cannot be less than ${minCharactors!} charactors.`
-                  : `This field cannot be less than ${minCharactors!} charactors.`
+                errorMessage = optionValue
               }
+            }
+
+            // If an error happened we update the error string
+            if (isError && minCharactors && errorMessage) {
+              error = error ? error + ` ${errorMessage}` : errorMessage
+            } else if (isError) {
+              error = error
+                ? error +
+                  ` This field cannot be less than ${minCharactors!} characters.`
+                : `This field cannot be less than ${minCharactors!} characters.`
             }
           }
 
@@ -128,6 +144,7 @@ function validateErrors<TValidation>({
             givenObject !== null
           ) {
             let isError = false
+            let errorMessage = ""
             // Each item in this loop is a validation option
             for (const [optionKey, optionValue] of Object.entries(
               givenObject
@@ -147,12 +164,55 @@ function validateErrors<TValidation>({
                 typeof optionValue === "string" &&
                 isError
               ) {
-                error = error ? error + ` ${optionValue}` : optionValue
-              } else if (isError) {
-                error = error
-                  ? error + ` Invalid email address.`
-                  : `Invalid email address.`
+                errorMessage = optionValue
               }
+            }
+
+            // If an error happend we update the error string
+            if (isError && errorMessage) {
+              error = error ? error + ` ${errorMessage}` : errorMessage
+            } else if (isError) {
+              error = error
+                ? error + ` Invalid email address.`
+                : `Invalid email address.`
+            }
+          }
+
+          // Has to include validation
+          if (
+            validationType === "hasToInclude" &&
+            typeof givenObject === "object" &&
+            givenObject !== null
+          ) {
+            let isError = false
+            let errorMessage = ""
+            let whatToContain = ""
+            for (const [optionKey, optionValue] of Object.entries(
+              givenObject
+            )) {
+              if (optionKey === "is" && typeof optionValue === "string") {
+                if (!String(newValue).includes(optionValue)) {
+                  isError = true
+                  whatToContain = optionValue
+                }
+              }
+
+              if (
+                optionKey === "errorMessage" &&
+                typeof optionValue === "string" &&
+                isError
+              ) {
+                errorMessage = optionValue
+              }
+            }
+
+            // If an error happend we update the error string
+            if (isError && errorMessage) {
+              error = error ? error + ` ${errorMessage}` : errorMessage
+            } else if (isError) {
+              error = error
+                ? error + ` This field has to contain "${whatToContain}".`
+                : `This field has to contain "${whatToContain}".`
             }
           }
         }
