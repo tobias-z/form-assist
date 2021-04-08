@@ -12,15 +12,21 @@ function useField(fieldName: string) {
   const error = errors[fieldName] as string
   const touched = allTouched[fieldName] as boolean
 
-  const toReturn = {
+  const field = {
     value,
-    error,
-    touched,
     onChange: handleChange,
     onBlur: handleBlur,
   }
 
-  return toReturn
+  const errorInfo = {
+    error,
+    touched,
+  }
+
+  return {
+    field,
+    errorInfo,
+  }
 }
 
 export default useField

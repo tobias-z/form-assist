@@ -273,32 +273,6 @@ called, and it will do just that 👌
 ---
 
 <p>
-<details><summary><strong>useFormAssistStorage</strong></summary>
-
-### Local Storage support
-
-If you want your form to be persisted through local storage. The
-**useFormAssistStorage** hook is exactly what you need.
-
-It works exactly like **useFormAssist**, except you have to pass it a
-local-storage key aswell.
-
-```jsx
-import {useFormAssistStorage} from "form-assist"
-
-const {formHelpers, validation} = useFormAssistStorage(
-  localStorageKey,
-  initialValues,
-  validationOptions
-)
-```
-
-</details>
-</p>
-
----
-
-<p>
 <details><summary><strong>Form</strong></summary>
 
 ### Form
@@ -405,6 +379,60 @@ or value respectively.
 
 </details>
 </p>
+
+---
+
+<p>
+<details><summary><strong>useField</strong></summary>
+
+### useField
+
+The useField hook allows you to grap a single field by it's name. This means
+that you can create custom components, and still have access to whether the
+field has an error or is touched.
+
+#### Quick example with React Bootstrap
+
+```jsx
+function MyTextField({name, label, ...props}) {
+  const {error, touched, ...field} = useField(name)
+  const isError = error && touched ? error : ""
+
+  return (
+    <Form.Group controlId={name}>
+      {label && <Form.Label>{label}</Form.Label>}
+      <Form.Control {...field} {...props} isInvalid={!!isError} />
+      {isError && (
+        <Form.Control.Feedback type="invalid">{isError}</Form.Control.Feedback>
+      )}
+    </Form.Group>
+  )
+}
+```
+
+This new **MyInputField** component could then be used as a replacement for the
+Field component
+
+</details>
+</p>
+
+## Local Storage support
+
+If you want your form to be persisted through local storage. The
+**useFormAssistStorage** hook is exactly what you need.
+
+It works exactly like **useFormAssist**, except you have to pass it a
+local-storage key aswell.
+
+```jsx
+import {useFormAssistStorage} from "form-assist"
+
+const {formHelpers, validation} = useFormAssistStorage(
+  localStorageKey,
+  initialValues,
+  validationOptions
+)
+```
 
 ## Issues
 
