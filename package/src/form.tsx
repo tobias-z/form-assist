@@ -211,8 +211,8 @@ function validateErrors<TValidation>({
               error = error ? error + ` ${errorMessage}` : errorMessage
             } else if (isError) {
               error = error
-                ? error + ` This field has to contain "${whatToContain}".`
-                : `This field has to contain "${whatToContain}".`
+                ? error + ` This field has to contain: ${whatToContain}.`
+                : `This field has to contain: ${whatToContain}.`
             }
           }
         }
