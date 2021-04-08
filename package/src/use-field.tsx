@@ -13,19 +13,20 @@ function useField(fieldName: string) {
   const touched = allTouched[fieldName] as boolean
 
   const field = {
+    name: fieldName,
     value,
     onChange: handleChange,
     onBlur: handleBlur,
   }
 
-  const errorInfo = {
+  const info = {
     error,
     touched,
   }
 
   return {
     field,
-    errorInfo,
+    info,
   }
 }
 

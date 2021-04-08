@@ -11,8 +11,6 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 ![npm](https://img.shields.io/npm/dm/form-assist)
 
-> Working process
-
 ## The problem
 
 I have been using formik for a while now, and I really like it. My only problem
@@ -43,7 +41,6 @@ const initialValues = {
 const {formHelpers} = useFormAssist(initialValues)
 
 function handleSubmit(event) {
-  event.preventDefault()
   console.log(formHelpers.values)
 }
 
@@ -82,35 +79,6 @@ const {
   touchAllFields,
 } = formHelpers
 ```
-
-## Validation
-
-Form assist has validation build in, so you don't have to do any fancy things
-yourself 🥳
-
-All you have to do is provide a second parameter, to the useFormAssist hook.
-
-```jsx
-const {formHelpers, validation} = useFormAssist(initialValues, {
-  example: {
-    required: true,
-    minCharacters: 5,
-    maxCharacters: 10,
-  },
-})
-```
-
-All of this is typed, so it's really easy to figure out what you can pass to the
-objects...
-
-You will then have to provide the _validation_ object that is returned from the
-useFormAssist hook, into your Form component's props like so:
-
-```jsx
-return <Form validation={validation}></Form>
-```
-
-And that's it! You now have validation on your fields.
 
 ## formHelpers
 
@@ -328,7 +296,7 @@ return (
 
 This is an object with error validation options.
 
-Read more about this under the **useFormAssist** hook section
+Read more about this under the [Validation](#validation-) section
 
 </details>
 </p>
@@ -395,8 +363,8 @@ field has an error or is touched.
 
 ```jsx
 function MyTextField({name, label, ...props}) {
-  const {error, touched, ...field} = useField(name)
-  const isError = error && touched ? error : ""
+  const {field, info} = useField(name)
+  const isError = info.error && info.touched ? info.error : ""
 
   return (
     <Form.Group controlId={name}>
@@ -415,6 +383,54 @@ Field component
 
 </details>
 </p>
+
+## Validation
+
+Form assist has validation build in, so you don't have to do any fancy things
+yourself 🥳
+
+All you have to do is provide a second parameter, to the useFormAssist hook.
+
+```jsx
+const {formHelpers, validation} = useFormAssist(initialValues, {
+  example: {
+    required: {
+      is: true,
+      errorMessage: "This field is required",
+    },
+    minCharacters: {
+      is: 5,
+    },
+    maxCharacters: {
+      is: 10,
+      errorMessage: "You cannot pass more than 10 characters to this field",
+    },
+  },
+})
+```
+
+Form assist does provide some default error messages, but if you want you can
+provide your own, just like in the example above.
+
+All of this is typed, so it's really easy to figure out what you can pass to the
+objects 🙊
+
+You will then have to provide the _validation_ object that is returned from the
+useFormAssist hook, into your Form component's props like so:
+
+```jsx
+return <Form validation={validation}></Form>
+```
+
+And that's it! You now have validation on your fields.
+
+Currently form assist supports these validation options:
+
+- required
+- minCharacters
+- maxCharacters
+- email
+- hasToInclude
 
 ## Local Storage support
 
