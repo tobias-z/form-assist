@@ -23,6 +23,7 @@ type PropDrillerProps = {
 type Select = {
   type: "select"
   name: string
+  id?: string
   options: Array<{
     id: number | string
     value: string
@@ -35,6 +36,7 @@ type Select = {
 type Textarea = {
   type: "textarea"
   name: string
+  id?: string
   element?: JSX.Element
   placeholder?: string
   className?: string
@@ -44,6 +46,7 @@ type Textarea = {
 type Checkbox = {
   type: "checkbox"
   name: string
+  id?: string
   element?: JSX.Element
   className?: string
   style?: React.CSSProperties
@@ -52,6 +55,7 @@ type Checkbox = {
 type TextField = {
   type?: "text" | "email" | "password" | "number"
   name: string
+  id?: string
   element?: JSX.Element
   placeholder?: string
   className?: string
@@ -61,6 +65,7 @@ type TextField = {
 type Radio = {
   type: "radio"
   name: string
+  id?: string
   value: string
   element?: JSX.Element
   className?: string

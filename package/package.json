@@ -17,7 +17,8 @@
   ],
   "homepage": "https://github.com/tobias-z/form-assist#readme",
   "scripts": {
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "test": "kcd-scripts test"
   },
   "keywords": [
     "react",
@@ -33,6 +34,7 @@
   "author": "Tobias Zimmermann",
   "license": "MIT",
   "devDependencies": {
+    "@testing-library/react": "^11.2.6",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
