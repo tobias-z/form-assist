@@ -6,16 +6,34 @@ import {Form} from "../form"
 
 afterEach(cleanup)
 
+const ERROR_MESSAGE = "You need to have atleast 5 charectors in your field"
+
 function MyForm() {
-  const {formHelpers} = useFormAssist({bob: "bob"})
+  const {formHelpers, validation} = useFormAssist(
+    {bob: "bob"},
+    {
+      bob: {
+        minCharacters: {
+          is: 5,
+          errorMessage: ERROR_MESSAGE,
+        },
+      },
+    }
+  )
+  const {errors} = formHelpers
+
   function handleSubmit() {
     formHelpers.resetForm()
   }
 
   return (
-    <Form formHelpers={formHelpers} onSubmit={handleSubmit}>
+    <Form
+      formHelpers={formHelpers}
+      validation={validation}
+      onSubmit={handleSubmit}>
       <label htmlFor="bob" />
       <Field name="bob" id="bob" aria-labelledby="bob" />
+      {errors.bob && <div id="error">{errors.bob}</div>}
       <button type="submit">submit</button>
     </Form>
   )
@@ -32,6 +50,17 @@ test("the field value is changing correctly", () => {
   expect(bob.value).toBe("bob")
   fireEvent.change(bob, {target: {value: "bob the builder"}})
   expect(bob.value).toBe("bob the builder")
+  fireEvent.click(screen.getByText(/submit/))
+  expect(bob.value).toBe("bob")
+})
+
+test("validation of forms is working", () => {
+  render(<MyForm />)
+  const bob = screen.getByLabelText(/bob/) as HTMLInputElement
+
+  fireEvent.click(screen.getByText(/submit/))
+  expect(screen.getByText(ERROR_MESSAGE))
+  fireEvent.change(bob, {target: {value: "more than 5"}})
   fireEvent.click(screen.getByText(/submit/))
   expect(bob.value).toBe("bob")
 })
