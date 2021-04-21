@@ -409,12 +409,6 @@ const {formHelpers, validation} = useFormAssist(initialValues, {
 })
 ```
 
-Form assist does provide some default error messages, but if you want you can
-provide your own, just like in the example above.
-
-All of this is typed, so it's really easy to figure out what you can pass to the
-objects 🙊
-
 You will then have to provide the _validation_ object that is returned from the
 useFormAssist hook, into your Form component's props like so:
 
@@ -423,6 +417,12 @@ return <Form validation={validation}></Form>
 ```
 
 And that's it! You now have validation on your fields.
+
+Form assist does provide some default error messages, but if you want you can
+provide your own, just like in the example above.
+
+All of this is typed, so it's really easy to figure out what you can pass to the
+objects 🙊
 
 Currently form assist supports these validation options:
 
